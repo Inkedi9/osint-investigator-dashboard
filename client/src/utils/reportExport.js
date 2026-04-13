@@ -1,0 +1,201 @@
+export function generateCaseReportHtml(currentCase, linkedEntities) {
+  const notesHtml =
+    currentCase.notes.length > 0
+      ? currentCase.notes
+          .map(
+            (note) => `
+              <div class="section-card">
+                <p class="note-content">${note.content}</p>
+                <p class="note-date">${note.createdAt}</p>
+              </div>
+            `,
+          )
+          .join("")
+      : `<p class="muted">No analyst notes available.</p>`;
+
+  const entitiesHtml =
+    linkedEntities.length > 0
+      ? linkedEntities
+          .map(
+            (entity) => `
+              <div class="section-card">
+                <p><strong>Type:</strong> ${entity.type}</p>
+                <p><strong>Value:</strong> ${entity.value}</p>
+                <p><strong>Risk Score:</strong> ${entity.riskScore}</p>
+                <p><strong>Description:</strong> ${entity.description}</p>
+              </div>
+            `,
+          )
+          .join("")
+      : `<p class="muted">No linked entities available.</p>`;
+
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>${currentCase.title} - Investigation Report</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background: #0a0f1a;
+            color: #e6eef8;
+            margin: 0;
+            padding: 40px;
+          }
+
+          .container {
+            max-width: 1000px;
+            margin: 0 auto;
+          }
+
+          .header {
+            border-bottom: 1px solid #24324a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+          }
+
+          .eyebrow {
+            color: #22d3ee;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 12px;
+            margin-bottom: 10px;
+          }
+
+          h1, h2 {
+            margin: 0 0 12px 0;
+          }
+
+          p {
+            line-height: 1.6;
+          }
+
+          .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+          }
+
+          .panel {
+            background: #121a2a;
+            border: 1px solid #24324a;
+            border-radius: 16px;
+            padding: 20px;
+          }
+
+          .section {
+            margin-top: 32px;
+          }
+
+          .section-card {
+            background: #121a2a;
+            border: 1px solid #24324a;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+          }
+
+          .muted {
+            color: #94a3b8;
+          }
+
+          .note-content {
+            margin-bottom: 8px;
+          }
+
+          .note-date {
+            color: #94a3b8;
+            font-size: 13px;
+          }
+
+          .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #24324a;
+            padding-top: 16px;
+          }
+
+          @media print {
+            body {
+              background: white;
+              color: black;
+              padding: 20px;
+            }
+
+            .panel,
+            .section-card {
+              border: 1px solid #ccc;
+              background: white;
+              color: black;
+            }
+
+            .eyebrow,
+            .muted,
+            .note-date,
+            .footer {
+              color: #555 !important;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="eyebrow">OSINT Investigator Dashboard</div>
+            <h1>${currentCase.title}</h1>
+            <p>${currentCase.description}</p>
+          </div>
+
+          <div class="grid">
+            <div class="panel">
+              <h2>Case Overview</h2>
+              <p><strong>Status:</strong> ${currentCase.status}</p>
+              <p><strong>Priority:</strong> ${currentCase.priority}</p>
+              <p><strong>Created:</strong> ${currentCase.createdAt}</p>
+              <p><strong>Linked Entities:</strong> ${currentCase.entityIds.length}</p>
+              <p><strong>Notes:</strong> ${currentCase.notes.length}</p>
+            </div>
+
+            <div class="panel">
+              <h2>Executive Summary</h2>
+              <p>
+                This report summarizes the current investigation case, including
+                analyst notes, linked entities, and contextual findings collected
+                during OSINT enrichment and case review.
+              </p>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Analyst Notes</h2>
+            ${notesHtml}
+          </div>
+
+          <div class="section">
+            <h2>Linked Entities</h2>
+            ${entitiesHtml}
+          </div>
+
+          <div class="footer">
+            Generated by OSINT Investigator Dashboard
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+}
+
+export function exportCaseReport(currentCase, linkedEntities) {
+  const reportHtml = generateCaseReportHtml(currentCase, linkedEntities);
+  const reportWindow = window.open("", "_blank");
+
+  if (!reportWindow) return;
+
+  reportWindow.document.open();
+  reportWindow.document.write(reportHtml);
+  reportWindow.document.close();
+}
