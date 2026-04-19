@@ -1396,8 +1396,11 @@ async function generateCasePdf(
     );
 
     await page.setContent(html, {
-      waitUntil: "networkidle0",
+      waitUntil: "domcontentloaded",
+      timeout: 60000,
     });
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const pdfBuffer = await page.pdf({
       format: "A4",
