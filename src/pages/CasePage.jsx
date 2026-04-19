@@ -42,6 +42,7 @@ export default function CasePage() {
     const [linkedEntities, setLinkedEntities] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
     useEffect(() => {
         let isCancelled = false;
@@ -167,6 +168,26 @@ export default function CasePage() {
         }
     };
 
+    const handleGenerateServerPdf = async () => {
+        try {
+            setIsGeneratingPdf(true);
+
+            const reportContext = {
+                pivotTrail: graphContext?.pivotTrail || [],
+                discoveredPivots: graphContext?.discoveredPivots || [],
+                graphImage: graphContext?.graphImage || null,
+                analystSummary: `This report summarizes...`,
+            };
+
+            const blob = await downloadCasePdfReport(currentCase.id, reportContext);
+            triggerPdfDownload(blob, `${currentCase.id}-report.pdf`);
+        } catch (error) {
+            console.error("Server PDF download failed:", error);
+        } finally {
+            setIsGeneratingPdf(false);
+        }
+    };
+
     return (
         <div className="space-y-6">
             <div>
@@ -280,6 +301,13 @@ export default function CasePage() {
                                 className="w-full rounded-xl border border-success/30 bg-success/10 px-4 py-3 text-sm font-medium text-success transition hover:bg-success/20"
                             >
                                 Generate Server PDF
+                            </button>
+                            <button
+                                onClick={handleGenerateServerPdf}
+                                disabled={isGeneratingPdf}
+                                className="w-full rounded-xl border border-success/30 bg-success/10 px-4 py-3 text-sm font-medium text-success transition hover:bg-success/20 disabled:opacity-50"
+                            >
+                                {isGeneratingPdf ? "Generating PDF..." : "Generate Server PDF"}
                             </button>
 
                             <button
