@@ -49,7 +49,7 @@ async function generateCasePdfReport(req, res) {
 
     res.send(pdfBuffer);
   } catch (error) {
-    console.error("PDF generation error:", error.message);
+    console.error("PDF generation error:", error);
 
     res.status(500).json({
       success: false,
