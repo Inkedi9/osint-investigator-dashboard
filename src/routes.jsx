@@ -7,6 +7,7 @@ import InvestigationsPage from "./pages/InvestigationsPage";
 import ReportsPage from "./pages/ReportsPage";
 import SettingsPage from "./pages/SettingsPage";
 import CasePage from "./pages/CasePage";
+import AttackSurfacePage from "./pages/AttackSurfacePage";
 
 export default function AppRoutes() {
     return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/entity/:id" element={<EntityPage />} />
             <Route path="/graph" element={<GraphPage />} />
+            <Route path="/attack-surface" element={<AttackSurfacePage />} />
             <Route path="/investigations" element={<InvestigationsPage />} />
             <Route path="/cases/:id" element={<CasePage />} />
             <Route path="/reports" element={<ReportsPage />} />

@@ -1,133 +1,291 @@
-# 🕵️‍♂️ OSINT Investigator Dashboard
+# 🧠 OSINT Investigator — Advanced Cyber Investigation Platform
 
-A modern OSINT investigation platform designed to simulate real-world cyber threat intelligence workflows.
-
-> ⚠️ This project is a demo / portfolio application and is continuously evolving with new features and improvements.
-
----
+Démo : https://osint-investigator-dashboard.vercel.app/
 
 ## 🚀 Overview
 
-The **OSINT Investigator Dashboard** is a full-featured front-end application that allows analysts to:
+**OSINT Investigator** is an advanced cybersecurity web application designed to simulate real-world investigation workflows across OSINT, SOC, and Purple Team operations.
 
-- Investigate domains, IPs, emails, and usernames
-- Correlate entities through a visual graph
-- Manage investigation cases
-- Add analyst notes
-- Track risk scoring
-- Export investigation reports
+The platform provides a **unified investigation environment** where analysts can:
 
----
+- explore attack surfaces
+- pivot across entities
+- correlate intelligence
+- simulate alerts
+- triage threats
+- generate investigation reports
 
-## 🧠 Features
-
-### 🔍 Search Engine
-
-- Global search from topbar
-- Query persistence via URL (`/search?q=...`)
-- Entity filtering (domain, IP, email, username)
-
-### 🧾 Entity Analysis
-
-- Risk scoring visualization
-- Metadata enrichment
-- Timeline of events
-- Related entities navigation
-
-### 🧩 Graph Investigation
-
-- Interactive relationship graph (React Flow)
-- Node-based entity exploration
-- Link analysis simulation
-
-### 📁 Case Management
-
-- Create investigation cases
-- Add entities to cases
-- Modify status (Open / In Review / Closed)
-- Modify priority (Low / Medium / High)
-- Persistent storage (localStorage)
-
-### 📝 Analyst Notes
-
-- Add notes directly inside cases
-- Persistent across sessions
-- Included in report exports
-
-### 📊 Dashboard
-
-- Dynamic metrics (cases, entities, risk)
-- Status & priority charts
-- Recent activity feed
-
-### 📄 Report Export
-
-- Generate investigation reports
-- Clean HTML export
-- Printable as PDF
+This project focuses on **realistic analyst experience**, **interactive graph intelligence**, and **modern cyber UI/UX**.
 
 ---
 
-## 🛠️ Tech Stack
+## 🧩 Core Features
 
-- **React (Vite)**
-- **Tailwind CSS**
-- **React Router**
-- **React Flow** (graph visualization)
-- **Recharts** (dashboard charts)
-- **LocalStorage** (data persistence)
+### 🔍 Attack Surface Scanner
 
----
-
-## 📸 Screenshots (optional)
-
-_Add screenshots here later (Dashboard, Graph, Case view, etc.)_
+- Domain-based reconnaissance simulation
+- Asset discovery (IP, services, infra)
+- Risk scoring & findings
+- Direct pivot into Graph View
 
 ---
 
-## ⚙️ Installation
+### 🌐 Live Host Intelligence (V2)
+
+- Tactical host-level analysis (IP-based)
+- Simulated scan pipeline (realistic UX)
+- Service fingerprinting (ports, versions)
+- Analyst findings with severity
+- Risk scoring engine
+- Auto-generated analyst summary
+
+✅ Actions:
+
+- Open host in Graph
+- Create Investigation Case
+
+---
+
+### 🧠 Graph Intelligence Engine
+
+- Interactive entity relationship graph
+- Node expansion & pivoting
+- Investigation trail tracking
+- Case-scoped graph mode
+- Attack Surface & Host graph injection
+
+---
+
+### 🤖 AI Analyst Panel
+
+- Simulated AI insights
+- Investigation summaries
+- Context-aware analysis
+- Risk interpretation
+
+---
+
+### 🔗 Correlation Engine
+
+- Automated pattern detection across entities
+- Correlation findings generation
+- Confidence scoring
+- Case contextual analysis
+
+---
+
+### 🚨 Alert Simulation Engine
+
+- Generate realistic alerts from correlations
+- Severity classification (Low / Medium / High)
+- Analyst triage system (True Positive / False Positive / Suspicious)
+- Push alerts directly into case activity
+
+---
+
+### 📊 Threat Scoring System
+
+- Global threat score based on:
+  - nodes
+  - correlations
+  - alerts
+  - findings
+
+- Visual scoring card in Graph View
+
+---
+
+### 📁 Investigation Case Management
+
+- Create & manage investigation cases
+- Add entities, notes, comments
+- Activity timeline tracking
+- Case priority & status management
+
+---
+
+### 📄 PDF Report Generation (V2 Premium)
+
+- Server-side PDF generation (Node.js)
+- Includes:
+  - Threat score
+  - Correlations
+  - Alerts + triage
+  - Investigation trail
+  - Graph snapshot
+
+- Analyst-ready reporting format
+
+---
+
+### 📊 Dashboard V2 (Executive View)
+
+- Global investigation metrics
+- Threat score distribution
+- Alert severity breakdown
+- Correlation insights
+- Case status & priority charts
+- Recent activity tracking
+
+---
+
+## 🧱 Tech Stack
+
+### Frontend
+
+- React (Vite)
+- TailwindCSS
+- Recharts (data visualization)
+- Lucide Icons
+
+### Backend
+
+- Node.js
+- Express
+- Puppeteer (PDF generation)
+
+### Data Layer
+
+- Mock API (simulated intelligence)
+- LocalStorage (case persistence)
+
+---
+
+## 🎯 Design Philosophy
+
+- **Realistic simulation over static UI**
+- **Analyst-first workflows**
+- **Dark cyber UI (black / cyan / red)**
+- **Modular architecture**
+- **No external API dependency required**
+
+---
+
+## 📁 Project Structure (Simplified)
+
+```
+src/
+├── components/
+│   ├── graph/
+│   ├── correlation/
+│   ├── investigations/
+│   ├── dashboard/
+│   └── osint/
+├── pages/
+├── utils/
+├── services/
+├── lib/
+└── data/
+```
+
+---
+
+## ⚙️ Getting Started
+
+### Frontend
 
 ```bash
-git clone https://github.com/Inkedi9/osint-investigator-dashboard.git
-cd osint-investigator-dashboard
+npm install
+npm run dev
+```
+
+### Backend
+
+```bash
+cd server
 npm install
 npm run dev
 ```
 
 ---
 
-## 🌐 Deployment
+## 🧪 Demo Capabilities
 
-This project can be deployed easily using **Vercel**.
-
----
-
-## 📌 Roadmap
-
-- [ ] Real API integration (VirusTotal, Shodan, etc.)
-- [ ] Authentication system
-- [ ] Advanced graph interactions
-- [ ] Case collaboration
-- [ ] Export PDF generation (server-side)
-- [ ] UI/UX improvements
+- Full investigation lifecycle simulation
+- Graph-based pivoting
+- Alert triage workflows
+- Report generation
+- Executive dashboard insights
 
 ---
 
-## ⚠️ Disclaimer
+## 🗺️ Roadmap V3 (Next Evolution)
 
-This project is intended for educational and demonstration purposes only.
+### 🔥 Intelligence Layer Upgrade
 
-No real OSINT queries or external APIs are used.
+- Real OSINT integrations (Shodan, VirusTotal, Whois)
+- External API connectors
+- Data normalization engine
+
+---
+
+### 🧠 AI / Automation
+
+- Real LLM integration (OpenAI / local models)
+- Auto-case summarization
+- Smart correlation suggestions
+- Investigation assistant (copilot mode)
+
+---
+
+### 🧬 Graph Intelligence V3
+
+- Automatic clustering
+- Path analysis (attack paths)
+- Entity scoring propagation
+- Temporal graph evolution
+
+---
+
+### ⚡ SOAR Capabilities
+
+- Playbooks (auto-response simulation)
+- Alert automation pipelines
+- Investigation workflows orchestration
+
+---
+
+### 👥 Collaboration
+
+- Multi-user system
+- Role-based access
+- Shared investigations
+- Comments & mentions
+
+---
+
+### ☁️ Infrastructure
+
+- Backend deployment (API hosted)
+- Database (PostgreSQL / MongoDB)
+- Authentication system
+- Persistent storage (no localStorage)
+
+---
+
+### 📊 Advanced Dashboard
+
+- Real-time metrics
+- Investigation timelines
+- Analyst performance tracking
+- Threat heatmaps
+
+---
+
+## 🏁 Final Notes
+
+This project is designed as a **portfolio-grade cybersecurity platform**, showcasing:
+
+- frontend engineering
+- UX/UI design
+- cyber domain knowledge
+- system architecture thinking
 
 ---
 
 ## 👨‍💻 Author
 
-Inkedi9
-Cybersecurity Enthusiast
+Inkedi9 — Cybersecurity Enthusiast
+Specialized in OSINT, SOC, and Threat Investigation
 
 ---
-
-## ⭐ If you like this project
-
-Feel free to star the repo and follow for updates.

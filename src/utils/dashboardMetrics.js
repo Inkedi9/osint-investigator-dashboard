@@ -63,23 +63,28 @@ export function getRecentActivity(cases, mockEntities) {
     .slice(0, 6);
 }
 
-export function getStatusDistribution(cases) {
-  const counts = {
-    Open: 0,
-    "In Review": 0,
-    Closed: 0,
+export function getStatusDistribution(cases = []) {
+  const map = {
+    open: 0,
+    investigating: 0,
+    "in review": 0,
+    closed: 0,
   };
 
-  cases.forEach((item) => {
-    if (counts[item.status] !== undefined) {
-      counts[item.status] += 1;
+  cases.forEach((c) => {
+    const status = String(c.status || "").toLowerCase();
+
+    if (map[status] !== undefined) {
+      map[status]++;
     }
   });
 
-  return Object.entries(counts).map(([name, value]) => ({
-    name,
-    value,
-  }));
+  return [
+    { name: "Open", value: map.open },
+    { name: "Investigating", value: map.investigating },
+    { name: "In Review", value: map["in review"] },
+    { name: "Closed", value: map.closed },
+  ];
 }
 
 export function getPriorityDistribution(cases) {

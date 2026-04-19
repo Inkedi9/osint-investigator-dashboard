@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function NewCaseModal({ isOpen, onClose, onCreate }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [priority, setPriority] = useState("Medium");
+    const [priority, setPriority] = useState("medium");
 
     if (!isOpen) return null;
 
@@ -12,22 +12,35 @@ export default function NewCaseModal({ isOpen, onClose, onCreate }) {
 
         if (!title.trim() || !description.trim()) return;
 
+        const now = Date.now();
+
         const newCase = {
-            id: `case_${Date.now()}`,
+            id: `case_${now}`,
             title: title.trim(),
             description: description.trim(),
-            status: "Open",
+            status: "open",
             priority,
-            createdAt: new Date().toISOString().slice(0, 10),
+            createdAt: new Date().toISOString(),
             entityIds: [],
+            assignee: "You",
+            reviewer: "Unassigned",
             notes: [],
+            comments: [],
+            activity: [
+                {
+                    id: `act_${now}`,
+                    action: "Case created",
+                    author: "You",
+                    date: new Date().toLocaleString(),
+                },
+            ],
         };
 
         onCreate(newCase);
 
         setTitle("");
         setDescription("");
-        setPriority("Medium");
+        setPriority("medium");
         onClose();
     };
 
@@ -82,9 +95,9 @@ export default function NewCaseModal({ isOpen, onClose, onCreate }) {
                             onChange={(e) => setPriority(e.target.value)}
                             className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none"
                         >
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
                         </select>
                     </div>
 

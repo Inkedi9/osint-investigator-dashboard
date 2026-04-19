@@ -7,12 +7,14 @@ import {
     FileText,
     Settings,
     Shield,
+    Globe,
 } from "lucide-react";
 
 const navItems = [
     { to: "/", label: "Dashboard", icon: LayoutDashboard },
     { to: "/search", label: "Search", icon: Search },
     { to: "/graph", label: "Graph View", icon: Network },
+    { to: "/attack-surface", label: "Attack Surface", icon: Globe },
     { to: "/investigations", label: "Investigations", icon: FolderOpen },
     { to: "/reports", label: "Reports", icon: FileText },
     { to: "/settings", label: "Settings", icon: Settings },

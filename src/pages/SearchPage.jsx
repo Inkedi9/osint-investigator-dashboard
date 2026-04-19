@@ -2,23 +2,34 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "../components/search/SearchBar";
 import SearchResultsList from "../components/search/SearchResultsList";
-import { mockEntities } from "../data/mockEntities";
+import { searchEntities } from "../lib/mockApi";
 
 export default function SearchPage() {
     const [results, setResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const queryFromUrl = searchParams.get("q") || "";
     const typeFromUrl = searchParams.get("type") || "domain";
 
-    const runSearch = ({ query, type }) => {
-        const filtered = mockEntities.filter(
-            (item) =>
-                item.type === type &&
-                item.value.toLowerCase().includes(query.toLowerCase())
-        );
+    const runSearch = async ({ query, type }) => {
+        setIsLoading(true);
+        setError(null);
 
-        setResults(filtered);
+        try {
+            const filtered = await searchEntities(query, {
+                type,
+            });
+
+            setResults(filtered);
+        } catch (err) {
+            console.error("Search failed:", err);
+            setError("Failed to load search results.");
+            setResults([]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleSearch = ({ query, type }) => {
@@ -26,8 +37,6 @@ export default function SearchPage() {
             q: query,
             type,
         });
-
-        runSearch({ query, type });
     };
 
     useEffect(() => {
@@ -38,6 +47,7 @@ export default function SearchPage() {
             });
         } else {
             setResults([]);
+            setError(null);
         }
     }, [queryFromUrl, typeFromUrl]);
 
@@ -48,7 +58,7 @@ export default function SearchPage() {
                     OSINT Search Workspace
                 </h2>
                 <p className="text-sm text-muted">
-                    Investigate domains, IPs, emails, and usernames.
+                    Investigate domains, IPs, emails, usernames, and related infrastructure.
                 </p>
             </div>
 
@@ -58,7 +68,12 @@ export default function SearchPage() {
                 initialType={typeFromUrl}
             />
 
-            <SearchResultsList results={results} />
+            <SearchResultsList
+                results={results}
+                isLoading={isLoading}
+                error={error}
+                hasActiveSearch={!!queryFromUrl.trim()}
+            />
         </div>
     );
 }
