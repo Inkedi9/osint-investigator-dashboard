@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
 });
 
 export const fetchHostIntel = async (ip) => {
@@ -15,12 +15,13 @@ export const fetchAttackSurface = async (domain) => {
 };
 
 export const downloadCasePdfReport = async (caseId, reportContext = {}) => {
-  const url = `/reports/case/${caseId}/pdf`;
-  console.log("PDF API URL", url);
-
-  const response = await API.post(url, reportContext, {
-    responseType: "blob",
-  });
+  const response = await API.post(
+    `/reports/case/${caseId}/pdf`,
+    reportContext,
+    {
+      responseType: "blob",
+    },
+  );
 
   return response.data;
 };
