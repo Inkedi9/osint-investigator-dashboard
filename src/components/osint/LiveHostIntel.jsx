@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
     AlertTriangle,
     Building2,
@@ -62,7 +62,7 @@ function serviceTone(port) {
     return "border-border bg-surfaceLight";
 }
 
-export default function LiveHostIntel() {
+export default function LiveHostIntel({ linkedIncident = null }) {
     const [ip, setIp] = useState("");
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -149,6 +149,12 @@ export default function LiveHostIntel() {
         }
     };
 
+    useEffect(() => {
+        if (linkedIncident?.ip) {
+            setIp(linkedIncident.ip);
+        }
+    }, [linkedIncident?.ip]);
+
     return (
         <div className="panel overflow-hidden p-0">
             <div className="border-b border-border bg-gradient-to-r from-cyan-500/10 via-transparent to-transparent px-6 py-5">
@@ -170,6 +176,18 @@ export default function LiveHostIntel() {
                     </div>
                 </div>
             </div>
+
+            {linkedIncident?.incidentId && (
+                <div className="mb-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4">
+                    <p className="text-xs uppercase tracking-[0.15em] text-cyan-400">
+                        Imported Target Context
+                    </p>
+                    <p className="mt-2 text-sm text-slate-300">
+                        Host target preloaded from {linkedIncident.incidentId}
+                        {linkedIncident.domain ? ` · related domain: ${linkedIncident.domain}` : ""}
+                    </p>
+                </div>
+            )}
 
             <div className="px-6 py-5">
                 <div className="flex flex-col gap-3 lg:flex-row">

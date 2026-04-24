@@ -29,6 +29,9 @@ import {
     getCorrelationsByCase,
 } from "../utils/dashboardAdvancedMetrics";
 
+import { getIncidentParams } from "../lib/incidentParams";
+import LinkedIncidentBanner from "../components/ecosystem/LinkedIncidentBanner";
+
 function kpiTone(type) {
     if (type === "danger") return "border-red-500/30 bg-red-500/10 text-red-300";
     if (type === "warning") return "border-amber-500/30 bg-amber-500/10 text-amber-300";
@@ -208,6 +211,8 @@ export default function Dashboard() {
             .slice(0, 8);
     }, [filteredExecutiveCases]);
 
+    const linkedIncident = useMemo(() => getIncidentParams(), []);
+
     const topPriorityCase =
         enrichedCases.find(
             (item) => String(item.priority || "").toLowerCase() === "high"
@@ -270,6 +275,8 @@ export default function Dashboard() {
                     Centralized workspace for entity analysis, graph-derived risk scoring, alert simulation, and case tracking.
                 </p>
             </div>
+
+            <LinkedIncidentBanner incident={linkedIncident} />
 
             <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-5">
                 <p className="text-xs uppercase tracking-[0.15em] text-cyan-400">
@@ -365,7 +372,7 @@ export default function Dashboard() {
                     data={correlationsByCaseData}
                     onBarClick={handleCorrelationCaseOpen}
                 />
-                <LiveHostIntel />
+                <LiveHostIntel linkedIncident={linkedIncident} />
             </section>
 
             <section className="grid gap-6 xl:grid-cols-[1.4fr_0.6fr]">
