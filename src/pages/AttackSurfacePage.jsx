@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { getIncidentParams } from "../lib/incidentParams";
+import LinkedIncidentBanner from "../components/ecosystem/LinkedIncidentBanner";
 import { scanAttackSurface } from "../lib/mockApi";
 import { useNavigate } from "react-router-dom";
 import { buildAttackSurfaceGraph } from "../lib/attackSurfaceGraph";
@@ -36,6 +38,16 @@ export default function AttackSurfacePage() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { pushToast } = useToast();
+
+    const linkedIncident = useMemo(() => getIncidentParams(), []);
+
+    useEffect(() => {
+        if (linkedIncident?.domain) {
+            setDomain(linkedIncident.domain);
+        } else if (linkedIncident?.ioc) {
+            setDomain(linkedIncident.ioc);
+        }
+    }, [linkedIncident?.domain, linkedIncident?.ioc]);
 
 
     const handleScan = async () => {
@@ -107,6 +119,8 @@ export default function AttackSurfacePage() {
                     Simulate domain exposure analysis, related assets, and infrastructure findings.
                 </p>
             </div>
+
+            <LinkedIncidentBanner incident={linkedIncident} />
 
             <div className="panel flex flex-col gap-4 p-4 md:flex-row md:items-center">
                 <input
